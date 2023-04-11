@@ -21,27 +21,33 @@ export const scheduler = new Scheduler({
   },
 });
 
-// export function useFCSignal<T>(event: Event<T>) {
-//   const signal = useSignal<T | undefined>(event.value);
-//   useVisibleTask$(() => {
-//     event.registerCallback(() => {
-//       signal.value = event.value;
-//     });
-//   });
-//   return useComputed$(() => signal.value);
-// }
+export function useFCSignal<T>(event: Event<T>) {
+  const signal = useSignal<T | undefined>(event.value);
+  useVisibleTask$(() => {
+    event.registerCallback(() => {
+      signal.value = event.value;
+    });
+  });
+  return useComputed$(() => signal.value);
+}
 
 export default component$(() => {
   useStylesScoped$(styles);
+  // ----- start: i would like to export this into a custom hook.
+  //              see the useFCSignal hook.
   const count = useSignal(countEvent.value);
   useVisibleTask$(() => {
-    console.log('register');
+    console.log(
+      'callback: everytime the event-value chanes, update the signal value'
+    );
     countEvent.registerCallback(() => {
-      console.log('called', countEvent.value);
-
+      console.log('updating signal value to: ', countEvent.value);
       count.value = countEvent.value;
     });
   });
+  // ------ end
+  // WILL THROW AN ERROR:
+  //const count2 = useFCSignal(countEvent);
 
   return (
     <div class="counter-wrapper">
