@@ -9,13 +9,15 @@ import {
 import styles from './counter.css?inline';
 import { Scheduler, request, Event, askFor } from '@flowcards/core';
 
+// THE EVENT OBJECT HOLDS INFORMATION ABOUT A SPECIFIC EVENT, LIKE VALUE, OR ISPENDING
 export const countEvent = new Event<number>('count');
 
+// THIS IS A COUNTER IN SCENARIO BASED PROGRAMMING:
 export const scheduler = new Scheduler({
   rootFlow: function* () {
-    yield request(countEvent, 100);
+    yield request(countEvent, 100); // INITIAL EVENT VALUE
     while (true) {
-      yield askFor(countEvent);
+      yield askFor(countEvent); // ASK THE USER TO SUBMIT A NEW COUNT VALUE
       console.log('askFor count', countEvent.value);
     }
   },
