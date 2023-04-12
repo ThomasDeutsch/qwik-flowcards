@@ -23,7 +23,7 @@
   "devDependencies": {
     "@builder.io/qwik": "^0.100.0",
     "@builder.io/qwik-city": "^0.100.0",
-    "@flowcards/core": "10.0.1",
+    "@flowcards/core": "^10.0.2",
     "@types/eslint": "8.21.3",
     "@types/node": "^18.15.3",
     "@typescript-eslint/eslint-plugin": "5.56.0",
